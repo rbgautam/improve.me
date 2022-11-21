@@ -6,10 +6,9 @@ This is a mock website for getting user feedback after emails with link to surve
 Hosted on Heroku:
 https://improve-me-forgeinnovations.herokuapp.com/
 
-Libraries used:
-<ul>
-<li>Express : API BackEnd</li>
-<li>Passpost : OAuth 2.0 middleware</li>
-<li>Passport-Goooogle-OAuth20: Google passport strategy</li>
-<li>Nodemon: Automatically restart local server (node run dev) </li>
-</ul>
+> #### Libraries used:
+>
+> * Express : API BackEnd
+> * Passpost : OAuth 2.0 middleware
+> * Passport-Goooogle-OAuth20: Google passport strategy
+> * Nodemon: Automatically restart local server (node run dev) 
