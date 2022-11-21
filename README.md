@@ -12,3 +12,8 @@ https://improve-me-forgeinnovations.herokuapp.com/
 > * Passpost : OAuth 2.0 middleware
 > * Passport-Goooogle-OAuth20: Google passport strategy
 > * Nodemon: Automatically restart local server (node run dev) 
+> * Mongoose.js : Js library to intercat with MongoDB
+
+#### Database
+   * MongoDB Atlas Cloud Based Database
+
