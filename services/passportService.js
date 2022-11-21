@@ -1,8 +1,11 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const mongoose = require('mongoose');
 //
 let GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 let GOOGLE_CLIENT_SECRET =process.env.GOOGLE_CLIENT_SECRET;
+//mongoose connection to user table
+const User = mongoose.model('users');
 // Google Oauth
 if (!GOOGLE_CLIENT_ID) {
     const keys = require('../config/keys');
@@ -22,9 +25,14 @@ passport.use(new GoogleStrategy({
     //   //return cb(err, user);
     //   console.log('user profile',user);
     // });
-    console.log('accesstoken:',accessToken);
-    console.log('refreshToken:',refreshToken);
-    console.log('profile:',profile);
+    // console.log('accesstoken:',accessToken);
+    // console.log('refreshToken:',refreshToken);
+    // console.log('profile:',profile);
+    new User({
+      googleId: profile.id, 
+      firstName: profile.name.givenName,
+      lastName: profile.name.familyName,
+    }).save();
   }
 
 ));

@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+require('./models/User');
 require('./services/passportService');
 let mongoDbUri = process.env.MONGODBURI;
 if(!mongoDbUri){
@@ -8,6 +9,7 @@ if(!mongoDbUri){
     mongoDbUri = keys.mongoURI;
 }
 mongoose.connect(mongoDbUri); 
+
 const authroutes = require('./routes/authRoutes');
 authroutes(app);
 
