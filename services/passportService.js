@@ -13,26 +13,43 @@ if (!GOOGLE_CLIENT_ID) {
     GOOGLE_CLIENT_SECRET =keys.googleClientSecret || process.env.GOOGLE_CLIENT_SECRET;    
 }
 
-// 
+passport.serializeUser((user,done)=>{
+  done(null,user.id);
+});
+
+passport.deserializeUser((id,done)=>{
+
+  User.findById(id).then(user=>{ 
+    console.log(user);
+    done(null,user)
+  });
+});
 
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "/auth/google/callback"
   },
-  function(accessToken, refreshToken, profile, cb) {
-    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-    //   //return cb(err, user);
-    //   console.log('user profile',user);
-    // });
-    // console.log('accesstoken:',accessToken);
-    // console.log('refreshToken:',refreshToken);
-    // console.log('profile:',profile);
-    new User({
-      googleId: profile.id, 
-      firstName: profile.name.givenName,
-      lastName: profile.name.familyName,
-    }).save();
+  function(accessToken, refreshToken, profile, done) {
+    
+    User.findOne({googleId:profile.id}).then(existingUser =>{{
+        if(!existingUser){
+          new User({
+            googleId: profile.id, 
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
+          }).save()
+          .then(user=>{done(null,user)});
+        }else{
+          //user already exits
+          console.log('User already exists',existingUser);
+          done(null,existingUser);
+        }
+    }
+  });
+
+
+    
   }
 
 ));

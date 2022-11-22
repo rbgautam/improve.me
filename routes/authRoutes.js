@@ -7,11 +7,12 @@ module.exports =(app) =>{
     );
 
     app.get('/home',(req,res)=>{
-        res.send({user:'Loogged in success'});
+        res.send({user:req.user});
     });
 
-    app.get('/login',(req,res)=>{
-        res.send({user:'Loogged in success'});
+    app.get('/api/current_user',(req,res)=>{
+        //console.log('User',req);
+        res.send(req.user);
     });
 
     app.get('/auth/google/callback', 
@@ -20,4 +21,9 @@ module.exports =(app) =>{
         // Successful authentication, redirect home.
         res.redirect('/home');
     });
+
+    app.get('/api/logout',(req,res)=>{
+        req.logout();
+        res.send({user:'User logged out'});
+    })
 };

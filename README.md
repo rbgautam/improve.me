@@ -4,7 +4,7 @@ This is a demo project showcasing use of React.js+Express+MongoDb
 This is a mock website for getting user feedback after emails with link to survey are sent to them.
 
 Hosted on Heroku:
-https://improve-me-forgeinnovations.herokuapp.com/
+https://improve-me-forgeinnovations.herokuapp.com/auth/google
 
 > #### Libraries used:
 >
