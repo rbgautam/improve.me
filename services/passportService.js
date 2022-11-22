@@ -1,17 +1,14 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
+const keys = require('../config/keys');
 //
-let GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-let GOOGLE_CLIENT_SECRET =process.env.GOOGLE_CLIENT_SECRET;
+const GOOGLE_CLIENT_ID = keys.googleClientId ;
+const GOOGLE_CLIENT_SECRET =keys.googleClientSecret;
 //mongoose connection to user table
 const User = mongoose.model('users');
 // Google Oauth
-if (!GOOGLE_CLIENT_ID) {
-    const keys = require('../config/keys');
-    GOOGLE_CLIENT_ID = keys.googleClientId || process.env.GOOGLE_CLIENT_ID;
-    GOOGLE_CLIENT_SECRET =keys.googleClientSecret || process.env.GOOGLE_CLIENT_SECRET;    
-}
+
 
 passport.serializeUser((user,done)=>{
   done(null,user.id);

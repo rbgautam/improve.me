@@ -3,15 +3,12 @@ const cookieSession= require('cookie-session');
 const passport = require('passport');
 const app = express();
 const mongoose = require('mongoose');
-
+const keys = require('./config/keys');
 require('./models/User');
 require('./services/passportService');
 
-let cookieKEY = process.env.COOKIEKEY;
-if(!cookieKEY){
-    const keys = require('./config/keys');
-    cookieKEY = keys.cookieKey;
-}
+let cookieKEY = keys.cookieKey;
+
 
 app.use(
     cookieSession({
@@ -20,22 +17,13 @@ app.use(
     })
 );
 
-// app.use(cookieSession({
-//     secret: cookieKEY,
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: true }
-//  }));
+
  
 app.use(passport.initialize());
 app.use(passport.session());
 
-let mongoDbUri = process.env.MONGODBURI;
+let mongoDbUri = keys.mongoURI;
 
-if(!mongoDbUri){
-    const keys = require('./config/keys');
-    mongoDbUri = keys.mongoURI;
-}
 mongoose.connect(mongoDbUri); 
 
 const authroutes = require('./routes/authRoutes');
