@@ -9,6 +9,7 @@ function App() {
         <p>
           Hello World!!
         </p>
+        <a href="\auth\google">Signin with Google</a>
         <a
           className="App-link"
           href="https://reactjs.org"
