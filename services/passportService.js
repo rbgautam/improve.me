@@ -14,12 +14,12 @@ passport.serializeUser((user,done)=>{
   done(null,user.id);
 });
 
-passport.deserializeUser((id,done)=>{
-
-  User.findById(id).then(user=>{ 
+passport.deserializeUser(async(id,done)=>{
+  const user = await User.findById(id);
+  if(user){
     console.log(user);
-    done(null,user)
-  });
+    done(null,user);
+  }
 });
 
 passport.use(new GoogleStrategy({
@@ -27,26 +27,21 @@ passport.use(new GoogleStrategy({
     clientSecret: GOOGLE_CLIENT_SECRET,
     callbackURL: "/auth/google/callback"
   },
-  function(accessToken, refreshToken, profile, done) {
+  async (accessToken, refreshToken, profile, done)=> {
     
-    User.findOne({googleId:profile.id}).then(existingUser =>{{
+    const existingUser = await User.findOne({googleId:profile.id});
+    
         if(!existingUser){
-          new User({
+          const user = await new User({
             googleId: profile.id, 
             firstName: profile.name.givenName,
             lastName: profile.name.familyName,
-          }).save()
-          .then(user=>{done(null,user)});
+          }).save();
+          return done(null,user)
         }else{
           //user already exits
           console.log('User already exists',existingUser);
           done(null,existingUser);
         }
-    }
-  });
-
-
-    
-  }
-
+      }
 ));
